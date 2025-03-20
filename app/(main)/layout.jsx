@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
             </div>
 
             {/* Main Content */}
-            <main className="flex flex-col p-5  overflow-auto scrollbar-hide">
+            <main className="flex flex-col  w-full  p-5  overflow-auto scrollbar-hide">
               <div>
                 <SearchBarComponent />
               </div>

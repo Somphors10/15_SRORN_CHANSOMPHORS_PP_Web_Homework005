@@ -3,22 +3,25 @@ import SearchBarComponent from '@/components/SearchBarComponent';
 import { getAllCartoonGenres, getAllCartoons } from '@/services/cartoonService';
 import React from 'react';
 
-export default async function Page() {
-    let cartoonsList = [];
-    let cartoonGenres = [];
-    const response = await getAllCartoons();
-    cartoonsList = response.payload;
-    console.log("Cartoon List", cartoonsList);
+export default async function Page({ searchParams }) {
 
-    const responseCate = await getAllCartoonGenres();
-    cartoonGenres = responseCate.payload;
-    console.log("Cartoon genres", cartoonGenres);
+    const { query } = await searchParams
+
+
+    const cartoonList = await getAllCartoons(query);
+    console.log("cartoon List", cartoonList);
+
+    const responses = await getAllCartoonGenres();
+    const cartoonGenres = responses.payload;
+    // console.log("cartoon category", cartoonGenres);
+
+
 
     return (
-        <div className='min-h-screen  bg-[var(--graybg)]'>
+        <div className=' bg-[var(--graybg)]'>
 
             {/* Main Content Container */}
-            <div className="rounded-2xl p-10 bg-white shadow-lg">
+            <div className="rounded-2xl p-10 bg-white shadow-lg ">
                 {/* Header */}
                 <header className="mb-8 flex flex-col md:flex-row justify-between items-center">
                     {/* Title */}
@@ -52,7 +55,7 @@ export default async function Page() {
 
                 {/* Cartoon Grid */}
                 <div className="grid grid-cols-3 gap-6">
-                    {cartoonsList?.map((cartoon) => (
+                    {cartoonList?.payload.map((cartoon) => (
                         <div key={cartoon?.id}>
                             <CardCartoons cartoon={cartoon} />
                         </div>

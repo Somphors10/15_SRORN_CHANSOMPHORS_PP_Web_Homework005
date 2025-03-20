@@ -2,22 +2,24 @@
 import CardComponent from '@/components/CardComponent';
 import { getAllBookCatagories, getAllBooks } from '@/services/bookService';
 import CategoryFilter from '@/components/CategoryFilter'; // Import the Client Component
+// import { useSearchParams } from 'next/navigation';
 
 export default async function Page({ searchParams }) {
-    const { query, category } = searchParams;
+    const { query } = await searchParams
+    const { category } = await searchParams
+
 
     // Fetch all books
-    const response = await getAllBooks(query);
-    const bookList = response.payload;
-    console.log("Book List", bookList);
+    const bookList = await getAllBooks(query);
+
 
     // Fetch all book categories
     const responses = await getAllBookCatagories();
     const bookCategory = responses.payload;
-    console.log("Book category", bookCategory);
+    // console.log("Book category", bookCategory);
 
     // Filter books based on the selected category
-    const filteredBooks = category ? bookList.filter(book => book.category_id === category) : bookList;
+    // const filteredBooks = category ? bookList.filter(book => book.category_id === category) : bookList;
 
     return (
         <div>
@@ -45,7 +47,7 @@ export default async function Page({ searchParams }) {
 
                 {/* Main Content */}
                 <div className='grid grid-cols-2'>
-                    {filteredBooks?.map((book) => (
+                    {bookList?.payload.map((book) => (
                         <div key={book?.id} className='mt-2'>
                             <CardComponent book={book} />
                         </div>

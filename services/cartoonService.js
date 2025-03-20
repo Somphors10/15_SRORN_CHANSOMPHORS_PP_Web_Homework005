@@ -1,6 +1,6 @@
 // get all cartons
-export const getAllCartoons = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/cartoon`);
+export const getAllCartoons = async (query) => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/cartoon${query ? `?search=${encodeURIComponent(query)}` : ""}`);
     const data = await response.json();
     return data; 
 };

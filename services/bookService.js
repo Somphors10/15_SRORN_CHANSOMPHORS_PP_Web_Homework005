@@ -1,8 +1,10 @@
-
+// 'use server'
 // get all books
-export const getAllBooks = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/book`);
+export const getAllBooks = async (query) => {
+    console.log("queryGetAll",query)
+    const response = await fetch (`${process.env.NEXT_PUBLIC_BASE_URL}/book${query ? `?search=${encodeURIComponent(query)}` : ""}`);
     const data = await response.json();
+    console.log("responseAll", data)
     return data; 
 };
 
@@ -27,8 +29,8 @@ export const getAllBookCatagories = async () => {
 
 
 // Search books by name
-export const searchBookByName = async (query) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/book?search=${encodeURIComponent(query)}`);
-    const data = await response.json();
-    return data;
-};
+// export const searchBook = async (query) => {
+//     const searchBook = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/book`);
+//     const response = searchBook.json();
+//     return response;
+// }
