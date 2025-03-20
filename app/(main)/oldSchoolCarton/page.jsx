@@ -1,30 +1,30 @@
 import CardCartoons from '@/components/CardCartoons';
-import SearchBarComponent from '@/components/SearchBarComponent';
+import FilterCartoon from '@/components/FilterCartoon';
 import { getAllCartoonGenres, getAllCartoons } from '@/services/cartoonService';
-import React from 'react';
 
 export default async function Page({ searchParams }) {
+    const { query, genere } = searchParams;
 
-    const { query } = await searchParams
-
-
+    // Fetch all cartoons
     const cartoonList = await getAllCartoons(query);
-    console.log("cartoon List", cartoonList);
+    // console.log("cartoon list: ", cartoonList);
 
+
+    // Fetch all cartoon genres
     const responses = await getAllCartoonGenres();
     const cartoonGenres = responses.payload;
-    // console.log("cartoon category", cartoonGenres);
 
-
+    // Filter cartoons on the selected genre
+    const filteredCartoons = genere
+        ? cartoonList.payload.filter((cartoon) => cartoon.ct_genre_id === parseInt(genere))
+        : cartoonList.payload;
 
     return (
-        <div className=' bg-[var(--graybg)]'>
-
+        <div className='bg-[var(--graybg)]'>
             {/* Main Content Container */}
-            <div className="rounded-2xl p-10 bg-white shadow-lg ">
+            <div className="rounded-2xl p-10 bg-white shadow-lg">
                 {/* Header */}
                 <header className="mb-8 flex flex-col md:flex-row justify-between items-center">
-                    {/* Title */}
                     <div className="mb-4 md:mb-0">
                         <h1 className="text-[var(--steel)] p-3 bg-[var(--graybg)] rounded-2xl text-lg font-semibold text-center md:text-left">
                             All School Cartoons
@@ -32,20 +32,12 @@ export default async function Page({ searchParams }) {
                     </div>
 
                     {/* Filter Dropdown */}
-                    <div >
-                        <form className='flex flex-col md:flex-row gap-3 '>
-                            <select
-                                id="pricingType"
-                                name="pricingType"
-                                className="scrollbar-hide overflow-y-scroll w-full h-10 border-2 border-gray-200 focus:border-gray-400 text-black rounded-lg px-3 py-1 hover:bg-[var(--graybg)] transition-colors"
-                            >
-                                <option value="" disabled defaultValue>Select a Category</option>
-                                {cartoonGenres?.map((genre) => (
-                                    <option key={genre?.id} value={genre.cartoon_genre}>
-                                        {genre.cartoon_genre}
-                                    </option>
-                                ))}
-                            </select>
+                    <div>
+                        <form className="flex flex-col md:flex-row gap-3 scrollbar-hide overflow-y-scroll">
+                            <FilterCartoon
+                                generes={cartoonGenres}
+                                selectedGeneres={genere}
+                            />
                         </form>
                     </div>
                 </header>
@@ -55,7 +47,7 @@ export default async function Page({ searchParams }) {
 
                 {/* Cartoon Grid */}
                 <div className="grid grid-cols-3 gap-6">
-                    {cartoonList?.payload.map((cartoon) => (
+                    {filteredCartoons?.map((cartoon) => (
                         <div key={cartoon?.id}>
                             <CardCartoons cartoon={cartoon} />
                         </div>

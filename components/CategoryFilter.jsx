@@ -4,11 +4,13 @@ import { useRouter } from 'next/navigation';
 export default function CategoryFilter({ categories, selectedCategory }) {
     const router = useRouter();
 
+
+
     const handleCategoryChange = (e) => {
         const categoryId = e.target.value;
-        console.log("Selected Category ID:", categoryId);
         router.push(`?category=${categoryId}`);
     };
+
 
     return (
         <select

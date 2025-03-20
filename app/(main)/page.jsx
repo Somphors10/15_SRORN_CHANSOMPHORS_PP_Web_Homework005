@@ -6,7 +6,7 @@ import { Tag } from 'lucide-react';
 export default function Page() {
   return (
     <div className="h-120 bg-[var(--graybg)] overflow-hidden"> {/* Full height, no scrolling */}
-      <div className="flex flex-col justify-center rounded-2xl bg-white p-8 mx-auto w-full max-w-screen-2xl h-full"> {/* Full height */}
+      <div className="flex flex-col justify-center rounded-2xl bg-white p-8 mx-auto w-full max-w-screen-2xl h-full">
         {/* Header */}
         <header className="w-full">
           <h1 className="w-30 text-[var(--steel)] p-3 bg-[var(--graybg)] rounded-2xl text-lg font-semibold text-center md:text-left">
@@ -19,7 +19,7 @@ export default function Page() {
         <main className="flex flex-col md:flex-row gap-25 p-8 w-full h-full justify-center items-center">
           {/* Left Column - Book */}
           <div className="relative flex flex-col items-center space-y-4 w-full md:w-1/4 h-full">
-            <Link href="/allBook" passHref>
+            <Link href="/allBook" >
               <div className="relative group w-full h-full">
                 {/* Image */}
                 <img
@@ -46,7 +46,7 @@ export default function Page() {
 
           {/* Right Column - Carton */}
           <div className="relative flex flex-col items-center space-y-4 w-full md:w-1/4 h-full"> {/* Full height */}
-            <Link href="/oldSchoolCarton" passHref>
+            <Link href="/oldSchoolCarton" >
               <div className="relative group w-full h-full">
                 {/* Image */}
                 <img
